@@ -8,16 +8,20 @@ from pydantic import BaseModel
 import uvicorn
 import asyncio
 from contextlib import asynccontextmanager
+from dotenv import load_dotenv
 
 from pdf_processor import build_retriever_from_pdf_bytes
 from rag_chain import build_rag_chain
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # --- API Key Configuration ---
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "AIzaSyDsvpw5fYQnVFtm8Q4Ksd8g1AqUEBsGSdg")
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 if GOOGLE_API_KEY:
     os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
     logger.info("Google API key configured")
